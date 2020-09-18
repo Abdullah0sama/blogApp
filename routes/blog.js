@@ -2,6 +2,7 @@ var router = require("express").Router();
 
 var Blog = require("../models/blog");
 var User = require("../models/user");
+var middleware  = require("../middleware/middleware");
 router.post("/", function (req, res) {
     req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.create(req.body.blog, function (err, success) {  
@@ -16,9 +17,15 @@ router.post("/", function (req, res) {
     })
 });
 
+router.get("/new", middleware.isLoggedIn, function (req, res) { 
+    res.render("blogs/new");
+});
+
 router.get("/:id", function (req, res) {  
-    Blog.findById(req.params.id).populate(["author", "comments"]).exec(function (err, blog) {  
+    Blog.findById(req.params.id).populate([{path:"author"}, {path:"comments", populate:{path:"author"}}]).exec(function (err, blog) {  
         if(err){
+            console.log(req.params.id);
+            console.log(err);
             res.redirect("/");
         }else{
             // console.log(blog);

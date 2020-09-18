@@ -5,6 +5,7 @@ var userSchema = new mongoose.Schema({
     mobile:Number,
     username:String,
     password:String,
+    salt:String,
     blogs:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Blog"

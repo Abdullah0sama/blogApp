@@ -6,7 +6,8 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     passport = require("passport"),
     localStrategy = require("passport-local").Strategy,
-    session = require("express-session");
+    session = require("express-session"),
+    bcrypt = require("bcrypt");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -18,6 +19,7 @@ mongoose.set("useFindAndModify", false);
 mongoose.connect("mongodb://localhost/blogApp", {useNewUrlParser:true, useUnifiedTopology:true})
 .then(() => console.log("Connected to db successfully!"))
 .catch((err) => console.log("error connecting to db", err));
+const blog = require("./models/blog");
 //creates the schema
 var Blog = require("./models/blog");
 var Comment = require("./models/comment");
@@ -36,6 +38,8 @@ passport.serializeUser(function(user, done){
 });
 passport.deserializeUser(function(id, done){
     User.findById(id, function(err, user){
+        user.password = undefined;
+        user.salt = undefined;
         done(err, user);
     });
 });
@@ -50,12 +54,13 @@ passport.use(new localStrategy(function(username, password, done){
         if(!user){
             return done(null, false,{message:"incorrect username"});
         }
-        if(!user.password == password){
+        if(!bcrypt.compareSync(password, user.password)){
             return(null, false, {message:"incorrect password"});
         }
         return done(null, user);
     })
 }));
+
 
 
 

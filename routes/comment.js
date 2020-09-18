@@ -1,25 +1,29 @@
 var router = require("express").Router();
 var Comment = require("../models/comment");
-router.post("/:id/comments", function(req, res){
+var Blog = require("../models/blog");
+var middleware = require("../middleware/middleware");
+const { isLoggedIn } = require("../middleware/middleware");
+router.post("/b/:id/comments", isLoggedIn, function(req, res){
+    req.body.comment.author = req.user;
     Comment.create(req.body.comment)
     .then(function(comment){
         return Blog.findByIdAndUpdate(req.params.id,{$push : {"comments" : comment }});
     })
-    .then(() => res.redirect("/" + req.params.id))
+    .then(() => res.redirect("/b/" + req.params.id))
     .catch(function(err){
-        console.log(err);
+        console.log("err");
     });
 });
-router.post("/:id/comments/:comment_id/reply", function(req, res){
+router.post("/b/:id/comments/:comment_id/reply", isLoggedIn, function(req, res){
     var newReply = new Comment({
-        text: req.body.reply.text
+        text: req.body.reply.text,
+        author:req.user
     });
     Comment.findById(req.params.comment_id)
     .then((comment) => {
         comment.replies.push(newReply);
         comment.save();
-        console.log(comment);
-        res.redirect("/" + req.params.id)
+        res.redirect("/b/" + req.params.id)
     })
     .catch((err) => console.log(err));
 });

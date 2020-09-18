@@ -22,21 +22,22 @@
     </div>
     <div class="card" id="comments-section">
         <div class="card-footer">
-            <form method="POST" action="/<%= blog._id %>/comments" class="d-flex justify-content-between my-2">
+            <form method="POST" action="/b/<%= blog._id %>/comments" class="d-flex justify-content-between my-2">
                 <input type="text" name="comment[text]" placeholder="Comment" class="form-control" id="comment" >
                 <input type="submit" value="Submit" class="btn btn-primary" id="comment-submit">
             </form>
             <ul class="list-group comments">
                 <% blog.comments.forEach((comment, index) => { %>
                     <li class="list-group-item">
-                        <p><b>USER1</b></p>
+                        <a class="card-link" href="/u/<%=comment.author.username%>"><b><%=comment.author.username%></b></a>
+                        <p class="float-right"><%=comment.date.toDateString()%></p>
                         <p class="lead"><%= comment.text %></p>
                         <div class="interactions">
                             <a class="" data-toggle="collapse" href="#comment<%=index%>" role="button" aria-expanded="false" aria-controls="comment<%= index %>">
                                 <i class="fas fa-reply"></i>
                             </a>
                             <div id="comment<%=index%>" class="collapse">
-                                <form method="POST" action="/<%= blog._id %>/comments/<%=comment._id%>/reply" class="text-right justify-content-between d-flex">
+                                <form method="POST" action="/b/<%= blog._id %>/comments/<%=comment._id%>/reply" class="text-right justify-content-between d-flex">
                                     <input type="text" name="reply[text]" placeholder="reply" class="form-control d-inline">
                                     <input type="submit" value="Reply" class="btn btn-secondary btn-sm">
                                 </form>
