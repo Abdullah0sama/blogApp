@@ -1,8 +1,8 @@
-<%- include("partials/header") %>
+<%- include("../partials/header") %>
 
 <div class="container my-5">
     <h1 class="text-center">Edit Blog</h1>
-    <form method="POST" action="/<%= blog._id %>?_method=put">
+    <form method="POST" action="/b/<%= blog._id %>?_method=put">
         <div class="form-group">
             <label>Title</label>
             <input class="form-control" type="text" name="blog[title]" required value="<%= blog.title%>" >
@@ -18,5 +18,5 @@
         <input class="btn btn-primary btn-lg" value="Submit" type="submit">
     </form>
 </div>
-<%- include("partials/footer") %>
+<%- include("../partials/footer") %>
 

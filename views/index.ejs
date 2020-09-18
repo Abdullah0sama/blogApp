@@ -9,7 +9,7 @@
                 <h3 class="card-title"><%= blog.title %></h3>
                 <p class="text-muted"><%= blog.date.toDateString() %></p>
                 <p class="card-text"><%- blog.body.substring(0, 150) %> ...</p>
-                <a href="<%= blog._id %>" class="btn btn-info btn-md">Full Blog</a>
+                <a href="/b/<%= blog._id %>" class="btn btn-info btn-md">Full Blog</a>
             </div>
         </div>
     <% }) %>

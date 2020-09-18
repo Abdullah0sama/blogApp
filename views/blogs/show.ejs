@@ -1,12 +1,12 @@
-<%- include("partials/header") %>
+<%- include("../partials/header") %>
 <div id="show">
     <div class="card mb-3">
         <% if(user && blog.author.equals(user._id)){ %>
         <div class="dropleft" id="controls-dropdown">
             <button class="btn  btn-md" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></button>
             <div class="dropdown-menu">
-                <a href="<%= blog._id %>/edit" class="dropdown-item text-warning">Edit</a>
-                <form method="POST" action="<%= blog._id %>?_method=DELETE" class="">
+                <a href="/b/<%= blog._id %>/edit" class="dropdown-item text-warning">Edit</a>
+                <form method="POST" action="/b/<%= blog._id %>?_method=DELETE" class="">
                     <input type="submit" class="dropdown-item text-danger" value="Delete">
                 </form>
             </div>
@@ -58,4 +58,4 @@
     </div>
 </div>
 
-<%- include("partials/footer") %>
+<%- include("../partials/footer") %>
