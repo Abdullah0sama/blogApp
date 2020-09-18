@@ -1,0 +1,51 @@
+.card{
+    width: 70%;
+    margin: 0 auto;
+}
+body{
+    background-color: lightcoral;
+}
+#show .card {
+    width: 90%;
+}
+#index .card{
+    width: 70%;
+    margin-bottom: 10px;
+}
+#show.card{
+    position: relative;
+}
+#controls-dropdown{
+    right: 20px;
+    top: 20px;
+    position: absolute;
+}
+#controls-dropdown button{
+    background-color: unset;
+}
+#controls-dropdown button i {
+    font-size: 2rem;
+    color: white;
+}
+#comments-section #comment{
+    width: 90%;
+}
+.comments li{
+    padding-bottom:0;
+}
+.comments .fa-reply{
+    color: gray;
+}
+.interactions{
+    margin-bottom: 5px;
+}
+.replies{
+    font-size: 0.85rem;
+}
+li.list-group-item{
+    padding-right: 0;
+    border-left:3px solid black;
+}
+li.list-group-item p {
+    padding-right: 18px;
+}

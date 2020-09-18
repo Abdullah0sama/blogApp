@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+<% if(userInfo){ %>
+    <div class="container-fluid">
+        <h1 class="text-center display-1 mb-5">Blogs By <%= userInfo.username %></h1>
+        <div class="row row-cols-2">
+            <% userInfo.blogs.forEach(blog => { %>
+                <div class="col col-12 col-md-6 col-lg-4" >
+                    <a href="/<%=blog._id%>" class="card-link">
+                        <div class="card">
+                            <img src="<%=blog.image%>" class="card-img-top">
+                            <div class="card-body">
+                                <h3 class="card-title text-center"><%= blog.title %></h3>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                <% }) %>
+        </div>
+    </div>
+<% }else{ %>
+    <h1 class="display-1 text-center">Profile not found.</h1>
+<% } %>
+
+<%- include("partials/footer") %>

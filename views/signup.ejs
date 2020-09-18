@@ -1,0 +1,26 @@
+<%- include("partials/header") %>
+
+<div class="container my-5">
+    <h1 class="text-center">Sign up</h1>
+    <form method="POST" action="/">
+        <div class="form-group">
+            <label>username</label>
+            <input class="form-control" type="text" name="user[username]" required  >
+        </div>
+        <div class="form-group">
+            <label>email</label>
+            <input class="form-control" type="email" name="user[email]" required>
+        </div>
+        <div class="form-group">
+            <label>phone number</label>
+            <input class="form-control" name="user[number]" required type="number">
+        </div>
+        <div class="form-group">
+            <label>password</label>
+            <input class="form-control" name="user[password]" required type="password">
+        </div>
+        <input class="btn btn-primary btn-lg" value="Submit" type="submit">
+    </form>
+</div>
+
+<%- include("partials/footer") %>
