@@ -30,7 +30,14 @@ router.post("/", function(req, res){
         user.save();
         res.redirect("/");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        res.redirect("/signup");
+        console.log(err);
+    });
+});
+router.get("/t/:tags", function(req, res){
+    console.log(req.params);
+    res.send(req);
 });
 router.get("/login", function(req, res){
     res.render("login");
@@ -38,7 +45,6 @@ router.get("/login", function(req, res){
 router.post("/login" , passport.authenticate("local", {failureRedirect:"/login", successRedirect:"/"}), function(req, res){})
 
 router.get("/", function (req, res) {
-    console.log(req);
     Blog.find(function(err, blogsData){
         if(err){
             console.log("error in retreving the data", err);

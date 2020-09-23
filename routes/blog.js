@@ -22,7 +22,10 @@ router.get("/new", middleware.isLoggedIn, function (req, res) {
 });
 
 router.get("/:id", function (req, res) {  
-    Blog.findById(req.params.id).populate([{path:"author"}, {path:"comments", populate:{path:"author"}}]).exec(function (err, blog) {  
+    Blog.findById(req.params.id).populate([{path:"author", select:"username"}, 
+                                            {path:"comments", populate:{path:"author", select:"username"}},
+                                            {path:"comments", populate:{path:"replies", populate:{path:"author", select:"username"}}}])
+        .exec(function (err, blog) {  
         if(err){
             console.log(req.params.id);
             console.log(err);

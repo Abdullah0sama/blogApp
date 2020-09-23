@@ -16,7 +16,7 @@ app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 //creates database and connects to it
 mongoose.set("useFindAndModify", false);
-mongoose.connect("mongodb://localhost/blogApp", {useNewUrlParser:true, useUnifiedTopology:true})
+mongoose.connect("mongodb://localhost/blogApp", {useNewUrlParser:true, useUnifiedTopology:true, useCreateIndex:true})
 .then(() => console.log("Connected to db successfully!"))
 .catch((err) => console.log("error connecting to db", err));
 const blog = require("./models/blog");
@@ -31,6 +31,14 @@ app.use(session({
     saveUninitialized:false,
     resave:false
 }));
+
+app.use(session({
+    saveUninitialized:true,
+    resave:true,
+    secret:"Fuck",
+    cookie:{maxAge:1000},
+
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser(function(user, done){
@@ -52,17 +60,14 @@ passport.use(new localStrategy(function(username, password, done){
     User.findOne({username:username},function(err, user){
         if(err) return done(err);
         if(!user){
-            return done(null, false,{message:"incorrect username"});
+            return done(null, false, {message:"incorrect username"});
         }
         if(!bcrypt.compareSync(password, user.password)){
-            return(null, false, {message:"incorrect password"});
+            return done(null, false, {message:"incorrect password"});
         }
         return done(null, user);
     })
 }));
-
-
-
 
 
 var blogs = require("./routes/blog");

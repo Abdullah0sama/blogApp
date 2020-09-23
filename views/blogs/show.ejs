@@ -46,7 +46,8 @@
                             <ul class="replies list-group">
                                 <% comment.replies.forEach(reply => { %>
                                     <li class="list-group-item" style="border-left:black 3px solid;">
-                                        <p class=""><b>USER22</b></p>
+                                        <a class="card-link" href="/u/<%=reply.author.username%>"><b><%=reply.author.username%></b></a>
+                                        <p class="float-right"><%= reply.date.toDateString()%></p>
                                         <p class=""><%= reply.text %></p>
                                     </li>
                                 <% }) %>

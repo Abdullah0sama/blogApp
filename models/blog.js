@@ -15,7 +15,10 @@ var blogSchema = new mongoose.Schema({
     author:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
-    }
+    },
+    tags:[{
+        type:String
+    }]
 });
 
 module.exports = mongoose.model("Blog", blogSchema);
