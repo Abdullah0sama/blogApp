@@ -58,3 +58,7 @@ li.list-group-item p {
 #profile-block{
     height: 300px;
 }
+
+#editor{
+    min-height: 400px;
+}

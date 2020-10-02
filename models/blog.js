@@ -1,9 +1,11 @@
+const { json } = require("body-parser");
 var mongoose = require("mongoose");
 var Comment = require("./comment");
 var blogSchema = new mongoose.Schema({
     title:String,
     image:String,
-    body:String,
+    body:JSON,
+    preview:String,
     date:{
         type:Date, 
         default:Date.now

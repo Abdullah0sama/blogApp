@@ -5,6 +5,14 @@ var middleware = require("../middleware/middleware");
 var passport = require("passport");
 var bcrypt = require("bcrypt");
 
+router.get("/test", function(req, res){
+    res.render("test");
+});
+router.post("/test", function(req, res){
+    console.log(req.body.body);
+    res.redirect("back");
+})
+
 router.get("/signup", middleware.isLoggedOut, function(req, res){
     res.render("signup");
 });
@@ -53,8 +61,8 @@ router.post("/login", function(req, res, next){
     })(req, res, next);
 });
 
+
 router.get("/", function (req, res) {
-    console.log(req.session, "index");
     Blog.find(function(err, blogsData){
         if(err){
             console.log("error in retreving the data", err);
