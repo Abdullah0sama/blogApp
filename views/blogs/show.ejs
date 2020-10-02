@@ -20,7 +20,7 @@
             <p class="card-text"><%- blog.body %></p>
         </div>
     </div>
-    <div class="card" id="comments-section">
+    <div class="card" id="comments">
         <div class="card-footer">
             <form method="POST" action="/b/<%= blog._id %>/comments" class="d-flex justify-content-between my-2">
                 <input type="text" name="comment[text]" placeholder="Comment" class="form-control" id="comment" >

@@ -27,7 +27,7 @@ body{
     font-size: 2rem;
     color: white;
 }
-#comments-section #comment{
+#comments #comment{
     width: 90%;
 }
 .comments li{
@@ -48,4 +48,13 @@ li.list-group-item{
 }
 li.list-group-item p {
     padding-right: 18px;
+}
+#login-form{
+    padding: 50px 50px;
+    border-radius: 10px;
+    width: 50%;
+}
+
+#profile-block{
+    height: 300px;
 }

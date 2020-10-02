@@ -5,7 +5,6 @@ var middleware = require("../middleware/middleware");
 var passport = require("passport");
 var bcrypt = require("bcrypt");
 
-var salt = bcrypt.genSaltSync(10);
 router.get("/signup", middleware.isLoggedOut, function(req, res){
     res.render("signup");
 });
@@ -25,26 +24,37 @@ router.get("/u/:username", function(req, res){
 router.post("/", function(req, res){
     User.create(req.body.user)
     .then((user) => {
+        var salt = bcrypt.genSaltSync(10);
         user.password = bcrypt.hashSync(user.password, salt);
         user.salt =  salt;
         user.save();
-        res.redirect("/");
+        res.redirect("/login");
     })
     .catch((err) => {
         res.redirect("/signup");
         console.log(err);
     });
 });
-router.get("/t/:tags", function(req, res){
-    console.log(req.params);
-    res.send(req);
-});
-router.get("/login", function(req, res){
+
+router.get("/login", middleware.isLoggedOut, function(req, res){
     res.render("login");
 });
-router.post("/login" , passport.authenticate("local", {failureRedirect:"/login", successRedirect:"/"}), function(req, res){})
+router.post("/login", function(req, res, next){
+    passport.authenticate("local", function(error, user, info){
+        if(error) return next(error);
+        if(!user) return res.redirect(req.get("referer"));
+        req.logIn(user, function(err){
+            if(err) return next(err);
+            if(!req.session.redirectUrl) return res.redirect("/");
+                res.redirect(req.session.redirectUrl);
+                delete req.session.redirectUrl;
+                req.session.save();
+        });
+    })(req, res, next);
+});
 
 router.get("/", function (req, res) {
+    console.log(req.session, "index");
     Blog.find(function(err, blogsData){
         if(err){
             console.log("error in retreving the data", err);

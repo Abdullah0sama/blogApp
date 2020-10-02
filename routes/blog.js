@@ -9,7 +9,7 @@ router.post("/", function (req, res) {
         if(err){
             console.log("err");
         }else{
-            success.author = req.user._id;
+            success.author = req.user;
             success.save();
             User.findOneAndUpdate({_id:req.user._id},{$push:{blogs:success}})
             .then((user) => res.redirect("/")).catch((err)=>console.log(err));
@@ -36,7 +36,7 @@ router.get("/:id", function (req, res) {
         }
     })
 });
-router.get("/:id/edit",  function (req, res) {  
+router.get("/:id/edit", middleware.ownedBlog, function (req, res) {  
     Blog.findById(req.params.id, function (err, blog) {  
         if(err){
             res.redirect("/b/" + req.params.id);
@@ -46,7 +46,7 @@ router.get("/:id/edit",  function (req, res) {
     })
 })
 
-router.put("/:id", function (req, res) {  
+router.put("/:id", middleware.ownedBlog, function (req, res) {  
     req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, function (err, success) {  
         if(err){
@@ -57,8 +57,8 @@ router.put("/:id", function (req, res) {
         }
     })
 });
-router.delete("/:id", function (req, res) {  
-    Blog.findByIdAndDelete(req.params.id, function (err) {  
+router.delete("/:id", middleware.ownedBlog, function (req, res) {  
+    Blog.findOneAndRemove({_id:req.params.id}, function (err) {  
         if(err){
             res.redirect("/b/" + req.params.id);
         }else{

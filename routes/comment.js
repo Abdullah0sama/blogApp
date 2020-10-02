@@ -2,8 +2,8 @@ var router = require("express").Router();
 var Comment = require("../models/comment");
 var Blog = require("../models/blog");
 var middleware = require("../middleware/middleware");
-const { isLoggedIn } = require("../middleware/middleware");
-router.post("/b/:id/comments", isLoggedIn, function(req, res){
+
+router.post("/b/:id/comments", middleware.isLoggedIn, function(req, res){
     req.body.comment.author = req.user;
     Comment.create(req.body.comment)
     .then(function(comment){
@@ -14,7 +14,7 @@ router.post("/b/:id/comments", isLoggedIn, function(req, res){
         console.log("err");
     });
 });
-router.post("/b/:id/comments/:comment_id/reply", isLoggedIn, function(req, res){
+router.post("/b/:id/comments/:comment_id/reply", middleware.isLoggedIn, function(req, res){
     var newReply = new Comment({
         text: req.body.reply.text,
         author:req.user
@@ -28,4 +28,7 @@ router.post("/b/:id/comments/:comment_id/reply", isLoggedIn, function(req, res){
     .catch((err) => console.log(err));
 });
 
+router.get("/b/:id/comments", function(req, res){
+    res.redirect(`/b/${req.params.id}/#comments`);
+});
 module.exports = router;

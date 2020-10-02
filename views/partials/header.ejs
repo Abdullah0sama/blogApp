@@ -12,28 +12,30 @@
 <body>
 <nav class="navbar navbar-expand navbar-light bg-light">
     <a class="navbar-brand" href="/">BLOG</a>
-    <ul class="navbar-nav">
+    <ul class="navbar-nav w-100 justify-content-between">
         <li class="nav-item">
-            <a href="/" class="nav-link">Home</a>
+            <!-- <a href="/" class="nav-link">Home</a> -->
         </li>
         <% if (user) { %>
-            <li class="nav-item">
-            <li class="nav-item">
-                <a href="/b/new" class="nav-link">Add Blog</a>
-            </li>
-                <a href="/u/<%=user.username%>" class="nav-link text-primary"><%= user.username %></a>
-            </li>
-            <li class="nav-item">
-                <a href="/logout" class="nav-link">logout</a>
-            </li>
+            <div class="d-flex">
+                <li class="nav-item">
+                    <a href="/b/new" class="nav-link">Add Blog</a>
+                </li>
+                    <a href="/u/<%=user.username%>" class="nav-link text-primary"><%= user.username %></a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link">Logout</a>
+                </li>
+            </div>
             <% } else { %>
-            <li class="nav-item">
-                <a href="/login" class="nav-link">login</a>
-            </li>
-            <li class="nav-item">
-                <a href="/signup" class="nav-link">signup</a>
-            </li>
+            <div class="d-flex">
+                <li class="nav-item">
+                    <a href="/login" class="nav-link">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/signup" class="nav-link">Signup</a>
+                </li>
+            </div>
         <% } %>
-        
     </ul>
 </nav>

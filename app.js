@@ -32,13 +32,7 @@ app.use(session({
     resave:false
 }));
 
-app.use(session({
-    saveUninitialized:true,
-    resave:true,
-    secret:"Fuck",
-    cookie:{maxAge:1000},
 
-}))
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser(function(user, done){
@@ -69,6 +63,14 @@ passport.use(new localStrategy(function(username, password, done){
     })
 }));
 
+// Comment.create({text:"Hello"}).then((comment)=>{
+// Blog.create({title:"TEST", body:"NHHHH", image:"Http://www.google.com"})
+// .then((blog)=> blog)
+// .catch((err)=>console.log(err))
+// .then( (blog) => Blog.findOneAndRemove({_id:blog._id}))
+// .then( (c) => console.log("done"))
+// .catch((err) => console.log(err));
+// })
 
 var blogs = require("./routes/blog");
 var comments = require("./routes/comment");

@@ -1,18 +1,19 @@
 <%- include("partials/header") %>
 
-<div class="container my-5">
-    <h1 class="text-center">Login</h1>
-    <form method="POST" action="/login">
-        <div class="form-group">
-            <label>username</label>
-            <input class="form-control" type="text" name="username" required  >
-        </div>
-        <div class="form-group">
-            <label>password</label>
-            <input class="form-control" name="password" required type="password">
-        </div>
-        <input class="btn btn-primary btn-lg" value="Submit" type="submit">
-    </form>
+<div class="container my-5 bg-dark" id="login-form">
+    <h1 class="text-center text-light">Login</h1>
+        <form method="POST" action="/login">
+            <div class="form-group my-4">
+                <label class="text-light">username</label>
+                <input class="form-control" type="text" name="username" required  >
+            </div>
+            <div class="form-group my-4">
+                <label class="text-light">password</label>
+                <input class="form-control" name="password" required type="password">
+            </div>
+            <input class="btn btn-success btn-lg w-100" value="Submit" type="submit">
+            <a href="/signup" class="link">Don't have an account yet?</a>
+        </form>
 </div>
 
 <%- include("partials/footer") %>

@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-
+var Comment = require("./comment");
 var blogSchema = new mongoose.Schema({
     title:String,
     image:String,
@@ -20,5 +20,10 @@ var blogSchema = new mongoose.Schema({
         type:String
     }]
 });
+blogSchema.pre("remove", function(){
+    console.log(this._conditions);
+    // this._conditions.comments.forEach((comment)=> Comment.findOneAndRemove(comment))
+    console.log(this);
+})
 
 module.exports = mongoose.model("Blog", blogSchema);
