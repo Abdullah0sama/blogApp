@@ -22,10 +22,20 @@ var blogSchema = new mongoose.Schema({
         type:String
     }]
 });
+
 blogSchema.pre("remove", function(){
-    console.log(this._conditions);
-    // this._conditions.comments.forEach((comment)=> Comment.findOneAndRemove(comment))
-    console.log(this);
+    this.model("User").updateOne(
+        {_id: this.author},
+        {$pull: {blogs: this._id}}
+    ,function(err, number){
+        if(err) console.log(err);
+    });
+    this.model("Comment").deleteMany(
+        {_id: {$in: this.comments}}, 
+        function(err){
+            if(err) console.log(err);
+        }
+    )   
 })
 
 module.exports = mongoose.model("Blog", blogSchema);

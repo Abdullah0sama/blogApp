@@ -58,13 +58,10 @@ router.put("/:id", middleware.ownedBlog, function (req, res) {
     })
 });
 router.delete("/:id", middleware.ownedBlog, function (req, res) {  
-    Blog.findOneAndRemove({_id:req.params.id}, function (err) {  
-        if(err){
-            res.redirect("/b/" + req.params.id);
-        }else{
-            res.redirect("/");
-        }
-    })
+    Blog.findById(req.params.id)
+    .then((blog) => blog.remove())
+    .then(() => res.redirect("/"))
+    .catch((err) => res.redirect("/b/" + req.params.id));
 });
 
 module.exports = router;
