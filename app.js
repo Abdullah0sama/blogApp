@@ -16,7 +16,7 @@ app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 //creates database and connects to it
 mongoose.set("useFindAndModify", false);
-mongoose.connect("mongodb://localhost/blogApp", {useNewUrlParser:true, useUnifiedTopology:true, useCreateIndex:true})
+mongoose.connect("mongodb+srv://AO:blogapp2020@blogapp.b1g7h.mongodb.net/blogApp?retryWrites=true&w=majority", {useNewUrlParser:true, useUnifiedTopology:true, useCreateIndex:true})
 .then(() => console.log("Connected to db successfully!"))
 .catch((err) => console.log("error connecting to db", err));
 const blog = require("./models/blog");
@@ -78,6 +78,6 @@ var index = require("./routes/index");
 app.use("/b",blogs);
 app.use(comments);
 app.use(index);
-app.listen("3000", function () {  
+app.listen(process.env.PORT, function () {  
     console.log("Blog app server started successfully!");
 })
